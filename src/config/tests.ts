@@ -1,0 +1,1 @@
+export const SAMPLE_NUMBER = 1000
