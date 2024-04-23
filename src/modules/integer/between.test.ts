@@ -1,38 +1,76 @@
 import { between } from "./between";
+import { random } from "./random";
+
+jest.mock("./random", () => ({
+  random: jest.fn(),
+}));
 
 describe("between", () => {
-  it("should return a number between the given range excluding the threshold", () => {
-    for (let i = 0; i < 100; i++) {
-      const min = 3;
-      const max = 7;
-
-      const result = between({ min, max, including: false });
-
-      expect(result).toBeGreaterThanOrEqual(min);
-      expect(result).toBeLessThanOrEqual(max);
-    }
+  afterAll(() => {
+    (random as jest.Mock).mockRestore();
   });
 
-  it("should return a number between the given range including the threshold", () => {
-    for (let i = 0; i < 100; i++) {
-      const min = 3;
-      const max = 7;
+  describe("when random value is 0", () => {
+    beforeAll(() => {
+      (random as jest.Mock).mockReturnValue(0);
+    });
 
-      const result = between({ min, max, including: true });
+    afterEach(() => {
+      (random as jest.Mock).mockClear();
+    });
 
-      expect(result).toBeGreaterThanOrEqual(min);
-      expect(result).toBeLessThanOrEqual(max);
-    }
+    it("should call the random function", () => {
+      between({ min: 5, max: 10 });
+
+      expect(random).toHaveBeenCalledTimes(1);
+    });
+
+    it("should return the min value", () => {
+      const result = between({ min: 5, max: 10 });
+      expect(result).toEqual(5);
+    });
   });
 
-  it("should return the min/max value when they are equal", () => {
-    for (let i = 0; i < 100; i++) {
-      const min = 0;
-      const max = 0;
+  describe("when random value is almost 1", () => {
+    beforeAll(() => {
+      (random as jest.Mock).mockReturnValue(1 - Number.EPSILON);
+    });
 
-      const result = between({ min, max, including: true });
+    afterEach(() => {
+      (random as jest.Mock).mockClear();
+    });
 
-      expect(result).toBe(min);
-    }
+    it("should call the random function", () => {
+      between({ min: 5, max: 10 });
+
+      expect(random).toHaveBeenCalledTimes(1);
+    });
+
+    it("should return (max - 1)", () => {
+      const result = between({ min: 5, max: 10 });
+      expect(result).toEqual(9);
+    });
+  });
+
+  describe("when random value is 0.5", () => {
+    beforeAll(() => {
+      (random as jest.Mock).mockReturnValue(0.5);
+    });
+
+    afterEach(() => {
+      (random as jest.Mock).mockClear();
+    });
+
+    it("should call the random function", () => {
+      between({ min: 5, max: 10 });
+
+      expect(random).toHaveBeenCalledTimes(1);
+    });
+
+    it("should return a value between min and max", () => {
+      const result = between({ min: 5, max: 10 });
+      expect(result).toBeGreaterThanOrEqual(5);
+      expect(result).toBeLessThan(10);
+    });
   });
 });

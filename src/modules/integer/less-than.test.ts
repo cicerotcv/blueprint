@@ -6,6 +6,10 @@ jest.mock("./random", () => ({
 }));
 
 describe("lessThan", () => {
+  afterEach(() => {
+    (random as jest.Mock).mockRestore();
+  });
+
   describe("when random value is 0", () => {
     beforeAll(() => {
       (random as jest.Mock).mockReturnValue(0);
@@ -25,6 +29,18 @@ describe("lessThan", () => {
     it("should return the max value", () => {
       const result = lessThan(10, { interval: 10 });
       expect(result).toEqual(9);
+    });
+  });
+
+  describe("when random value is 0.5", () => {
+    beforeAll(() => {
+      (random as jest.Mock).mockReturnValue(0.5);
+    });
+
+    it("should return a value between min and max", () => {
+      const result = lessThan(10, { interval: 10 });
+      expect(result).toBeGreaterThanOrEqual(0);
+      expect(result).toBeLessThanOrEqual(9);
     });
   });
 });

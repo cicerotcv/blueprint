@@ -6,6 +6,10 @@ jest.mock("./random", () => ({
 }));
 
 describe("greaterThan", () => {
+  afterEach(() => {
+    (random as jest.Mock).mockRestore();
+  });
+
   describe("when random value is 0", () => {
     beforeAll(() => {
       (random as jest.Mock).mockReturnValue(0);
