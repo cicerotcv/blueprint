@@ -1,10 +1,11 @@
 import { Blueprint } from "../../types/blueprint";
 import { fromBlueprint } from "./from-blueprint";
 
-const getMockedBlueprint = <T extends any>(value: T): Blueprint<T> => ({
-  generate: jest.fn().mockReturnValue(value) as () => T,
-  transform: () => ({} as Blueprint<any>),
-});
+const getMockedBlueprint = <T extends any>(value: T): Blueprint<T> =>
+  ({
+    generate: jest.fn().mockReturnValue(value) as () => T,
+    transform: () => ({} as Blueprint<any>),
+  } as Blueprint<T>);
 
 const numberRecipe = {
   length: 3,
