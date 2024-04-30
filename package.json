@@ -14,7 +14,7 @@
     "dev:watch": "tsup src/index.ts --format cjs,esm --dts --watch",
     "prettier:check": "prettier --check src",
     "prettier:write": "prettier --write src",
-    "test:run": "jest",
+    "test": "jest",
     "test:watch": "jest --watch",
     "lint": "tsc"
   },

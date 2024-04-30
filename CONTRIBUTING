@@ -1,0 +1,61 @@
+
+# Contribution Guidelines
+
+Thank you for considering contributing to Blueprint! We appreciate your interest in helping to improve this project. Please take a moment to review the following guidelines to ensure a smooth contribution process.
+
+
+## How to Contribute
+
+1. Fork the repository to your GitHub account.
+2. Clone the forked repository to your local machine:
+
+~~~bash
+git clone https://github.com/cicerotcv/blueprint.git
+~~~
+
+3. Create a new branch for your contribution:
+
+4. Make your changes and commit them with clear and descriptive messages. We follow the [conventional commits specification](https://www.conventionalcommits.org/) for our commit messages. Conventional commits provide a structured way to describe the purpose of a commit and its type.
+
+5. Push your changes to your fork.
+ 
+6. Submit a pull request (PR) to the main branch of the main repository. Be sure to include a detailed description of your changes in the PR.
+
+## Development Setup
+
+To set up the development environment:
+
+1. Install `pnpm`:
+
+~~~bash
+npm install -g pnpm
+~~~
+
+2. Install dependencies:
+
+~~~bash
+pnpm install
+~~~
+
+2. Make your changes.
+
+3. Run `prettier`:
+
+~~~bash
+pnpm run prettier:write
+~~~
+
+4. Run tests to ensure your changes didn't break anything:
+
+~~~bash
+pnpm run tests:run
+~~~
+
+If you're adding new features or modifying existing ones, make sure to update the documentation and tests accordingly.
+
+## Coding Guidelines
+
+- Follow the existing code style and conventions.
+- Write clear, concise, and well-documented code.
+- Write meaningful commit messages that describe the purpose of your changes.
+- Ensure that your changes pass all tests.
