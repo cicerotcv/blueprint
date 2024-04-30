@@ -1,53 +1,71 @@
 # Blueprint
 
-This project is built on top of FakerJS and its main goal is to provide a schema-driven data generation in a very similar way we use schemas in NoSQL databases (one in particular comes to mind, maybe? 👀).
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?logo=typescript&logoColor=white)
+![Jest](https://img.shields.io/badge/testing-jest-%23C21325?logo=jest&logoColor=white)
+[![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![GitHub license](https://img.shields.io/github/license/cicerotcv/blueprint)](https://github.com/cicerotcv/blueprint/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/cicerotcv/blueprint)](https://github.com/cicerotcv/blueprint/issues)
+[![GitHub stars](https://img.shields.io/github/stars/cicerotcv/blueprint)](https://github.com/cicerotcv/blueprint/stargazers)
 
-```typescript
-import { Blueprint as Bp } from '@cicerotcv/blueprint'
 
-// you can describe schemas
-const dateSchema = Bp.date
-  .between("2000-01-01", "2022-12-31")
-  .transform((date) => date.toISOString());
+Blueprint is a versatile random data generator inspired by the simplicity and power of Zod. With Blueprint, you can effortlessly create mock data for your applications, tests, or any other use case where realistic yet customizable data is needed.
 
-const idSchema = Bp.datatype.uuid();
+## Features
 
-const emailSchema = Bp.internet.email()
+**Easy-to-use syntax:** Define your data structures with a simple and intuitive syntax, making it easy to generate data according to your specifications.
 
-// join them together in a ObjectSchema
-const userSchema = Bp.object({
-  id: idSchema,
-  createdAt: dateSchema,
-  email: emailSchema,
+**Flexible customization:** Tailor your data generation with a wide range of options, including data types, constraints, and relationships between data fields.
+
+**Built-in data types:** Blueprint supports a variety of common data types such as strings, numbers, dates, and more, allowing you to generate diverse datasets.
+
+**Extensible:** Extend Blueprint with custom data types and generators to suit your specific requirements.
+
+
+## Installation
+You can install Blueprint via `npm`:
+
+~~~bash
+npm install --save-dev @cicerotcv/blueprint
+~~~
+
+Using `yarn`
+
+~~~bash
+yarn add -D @cicerotcv/blueprint
+~~~
+
+Or `pnpm`
+
+~~~bash
+pnpm add -D @cicerotcv/blueprint
+~~~
+
+## Usage
+
+~~~typescript
+import { b } from '@cicerotcv/blueprint';
+
+const objectSchema = b.schema({
+  age: b.integer.between({
+    min: 0,
+    max: 10,
+  }),
 });
 
-// create an array of items of same kind
-const userCollection = Bp.array({
-  minLength: 1,
-  maxLength: 4,
-  schema: userSchema,
+const array = b.array({
+  length: 3,
+  schema: objectSchema,
 });
 
-// and run .compile() to generate all the items
-console.log(userCollection.compile());
-```
+console.log(array.generate());
+// [{ age: 2 }, { age: 3 }, { age: 5 }]
+~~~
 
-```
-[
-  {
-    id: '4358c215-d0a7-4ecf-b2b3-c066630db023',
-    createdAt: '2000-01-25T04:09:16.492Z',
-    email: 'Danyka_Bechtelar16@yahoo.com'
-  },
-  {
-    id: '6a6b3a29-4cae-4248-963d-7fbf593c1c81',
-    createdAt: '2021-03-20T23:16:09.807Z',
-    email: 'Gideon41@yahoo.com'
-  },
-  {
-    id: 'b946a0c7-122e-4875-aced-07e5cde87957',
-    createdAt: '2016-08-15T22:01:41.988Z',
-    email: 'Alena16@hotmail.com'
-  }
-] 
-```
+## Contributing
+Contributions are welcome! Please see our contribution guidelines for more information on how to get involved.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## Acknowledgments
+Blueprint draws inspiration from Zod. We are grateful to the contributors of Zod for their fantastic work.

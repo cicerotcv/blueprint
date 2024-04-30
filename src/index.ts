@@ -1,1 +1,1 @@
-export { Blueprint } from "./blueprint";
+export { b } from "./blueprint";
